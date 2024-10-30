@@ -11,9 +11,10 @@ GameObject:
   - component: {fileID: 2637830414315592533}
   - component: {fileID: 6831860567704894917}
   - component: {fileID: 3048504363349154494}
+  - component: {fileID: -6402775289160225891}
   m_Layer: 0
-  m_Name: Tiles
-  m_TagString: Untagged
+  m_Name: Brick
+  m_TagString: Brick
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -27,9 +28,9 @@ Transform:
   m_GameObject: {fileID: 872756421347496555}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -14, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.73, y: 0.73, z: 0.73}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -121,12 +122,27 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 3.84, y: 1.28}
+    oldSize: {x: 1.5, y: 0.5}
     newSize: {x: 3.84, y: 1.28}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 3.84, y: 1.28}
+  m_Size: {x: 1.5, y: 0.5}
   m_EdgeRadius: 0
+--- !u!114 &-6402775289160225891
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 872756421347496555}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 838f40f24dc857f46b934b2723ac4633, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hitsToBreak: 1
+  bonusItem: {fileID: 8081747452151880291, guid: 89094dc840a7b9f49b240d0ef054d5a8, type: 3}
+  gameManager: {fileID: 0}
