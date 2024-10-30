@@ -713,6 +713,11 @@ MonoBehaviour:
   bricksParent: {fileID: 1989674183}
   ball: {fileID: 7489525308572620685}
   paddle: {fileID: 62089930}
+  BonusItems:
+  - {fileID: 8081747452151880291, guid: 89094dc840a7b9f49b240d0ef054d5a8, type: 3}
+  - {fileID: 6168673781084359289, guid: 56d18023f1c0a34499e03abdd04d728b, type: 3}
+  - {fileID: 7946929173186477677, guid: 2afa9d93938c4c44f8404f16145dcdaf, type: 3}
+  - {fileID: 1252878059693113980, guid: 2313aeb3ad6a0c24788b40b08c921942, type: 3}
 --- !u!4 &819262941
 Transform:
   m_ObjectHideFlags: 0
@@ -1508,8 +1513,8 @@ GameObject:
   - component: {fileID: 8214485515616529776}
   - component: {fileID: 2539163371875368835}
   - component: {fileID: 7489525308572620685}
-  m_Layer: 0
-  m_Name: Balle
+  m_Layer: 6
+  m_Name: Ball
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -20,6 +20,7 @@ public class GameManager : MonoBehaviour
     public Transform bricksParent;
     public Ball ball;
     public Paddle paddle;
+    public List<GameObject> BonusItems = new List<GameObject>();
 
     void Start()
     {
@@ -64,6 +65,13 @@ public class GameManager : MonoBehaviour
                 GameObject brick = Instantiate(brickPrefab, position, Quaternion.identity);
                 brick.transform.parent = bricksParent;
                 bricks.Add(brick);
+                //Add a random bonus item to the brick but there is a 1 in 5 chance that the brick will have a bonus item
+                if (Random.Range(0, 5) == 0)
+                {
+                    GameObject bonusItem = BonusItems[Random.Range(0, BonusItems.Count)];
+                    brick.GetComponent<Brick>().bonusItem = bonusItem;
+
+                }
             }
         }
     }

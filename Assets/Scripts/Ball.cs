@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 public class Ball : MonoBehaviour
 {
@@ -7,6 +8,12 @@ public class Ball : MonoBehaviour
     public bool inPlay = false;
     public Transform paddle;
     public GameManager gameManager;
+
+    private bool speedBonusActive = false;
+    private bool slowBonusActive = false;
+    private bool paddleExpandBonusActive = false;
+    private float originalSpeed;
+    private Vector3 originalPaddleScale;
 
     void Start()
     {
@@ -51,22 +58,52 @@ public class Ball : MonoBehaviour
             gameManager.UnregisterBall();
         }
     }
-    public void IncreaseSpeed(float amount)
+
+    public void IncreaseSpeed(float amount, float duration)
     {
-        speed += amount;
-        rb.velocity = rb.velocity.normalized * speed;
+        if (!speedBonusActive)
+        {
+            speedBonusActive = true;
+            originalSpeed = speed;
+            speed += amount;
+            rb.velocity = rb.velocity.normalized * speed;
+            StartCoroutine(ResetSpeedAfterDuration(duration));
+        }
     }
 
-    public void DecreaseSpeed(float amount)
+    private IEnumerator ResetSpeedAfterDuration(float duration)
     {
-        speed = Mathf.Max(speed - amount, 1f); // Pour éviter que la vitesse ne soit trop basse
+        yield return new WaitForSeconds(duration);
+        speed = originalSpeed;
         rb.velocity = rb.velocity.normalized * speed;
+        speedBonusActive = false;
     }
+
+    public void DecreaseSpeed(float amount, float duration)
+    {
+        if (!slowBonusActive)
+        {
+            slowBonusActive = true;
+            originalSpeed = speed;
+            speed = Mathf.Max(speed - amount, 1f); // Pour éviter que la vitesse ne soit trop basse
+            rb.velocity = rb.velocity.normalized * speed;
+            StartCoroutine(ResetSlowAfterDuration(duration));
+        }
+    }
+
+    private IEnumerator ResetSlowAfterDuration(float duration)
+    {
+        yield return new WaitForSeconds(duration);
+        speed = originalSpeed;
+        rb.velocity = rb.velocity.normalized * speed;
+        slowBonusActive = false;
+    }
+
+
 
     public void ResetBall()
     {
         inPlay = false;
         rb.velocity = Vector2.zero;
-
     }
 }

@@ -22,15 +22,15 @@ public class Bonus : MonoBehaviour
             switch (bonusType)
             {
                 case BonusType.SpeedUp:
-                    ball.IncreaseSpeed(2f);
+                    ball.IncreaseSpeed(2f, 10f);
                     break;
 
                 case BonusType.SlowDown:
-                    ball.DecreaseSpeed(2f);
+                    ball.DecreaseSpeed(2f, 10f);
                     break;
 
                 case BonusType.ExpandPaddle:
-                    paddle.Expand();
+                    paddle.Expand(2f, 10f);
                     break;
 
                 case BonusType.MultiBall:
