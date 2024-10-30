@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -22,8 +23,11 @@ public class GameManager : MonoBehaviour
     public Paddle paddle;
     public List<GameObject> BonusItems = new List<GameObject>();
 
+    public GameObject gameOverPanel;
+
     void Start()
     {
+        gameOverPanel.SetActive(false);
         SetupBricks();
         activeBalls = 1;
     }
@@ -93,7 +97,8 @@ public class GameManager : MonoBehaviour
         {
             // Fin du jeu
             Debug.Log("Game Over");
-            // Réinitialiser le jeu ou afficher un écran de fin
+            GameOver();
+
         }
         else
         {
@@ -137,6 +142,16 @@ public class GameManager : MonoBehaviour
         {
             LoseLife();
         }
+    }
+    public void GameOver()
+    {
+        Time.timeScale = 0;
+        gameOverPanel.SetActive(true);
+    }
+    public static void RestartGame()
+    {
+        Time.timeScale = 1;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
 }
