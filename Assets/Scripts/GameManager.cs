@@ -42,6 +42,13 @@ public class GameManager : MonoBehaviour
         {
             // Charger le niveau suivant ou afficher un message de victoire
             Debug.Log("Niveau terminé !");
+
+            // delete all the bonus items
+            foreach (GameObject bonusItem in GameObject.FindGameObjectsWithTag("BonusItem"))
+            {
+                Destroy(bonusItem);
+            }
+
             // Par exemple, recharger les briques
             SetupBricks();
             // Réinitialiser la balle et la raquette

@@ -43,7 +43,7 @@ public class Ball : MonoBehaviour
         if (!inPlay)
         {
             // Verrouiller la balle sur la raquette avant le lancement
-            transform.position = paddle.position + new Vector3(0, 0.5f, 0);
+            transform.position = paddle.position + new Vector3(0, 0.7f, 0);
         }
     }
 
@@ -58,17 +58,29 @@ public class Ball : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        // Ajuster légèrement l'angle de rebond pour éviter les rebonds trop verticaux ou horizontaux
-        Vector2 direction = rb.velocity.normalized;
-        if (Mathf.Abs(direction.x) < 0.1f)
+        Debug.Log("Collision with " + collision.gameObject.name);
+
+        if (collision.gameObject.CompareTag("Paddle"))
         {
-            direction.x = direction.x < 0 ? -0.1f : 0.1f;
+            // Calculer l'angle de rebond en fonction de l'endroit où la balle touche la raquette
+            float hitFactor = (transform.position.x - collision.transform.position.x) / collision.collider.bounds.size.x;
+            Vector2 direction = new Vector2(hitFactor, 1).normalized;
+            rb.velocity = direction * speed;
         }
-        if (Mathf.Abs(direction.y) < 0.1f)
+        else
         {
-            direction.y = direction.y < 0 ? -0.1f : 0.1f;
+            // Ajuster légèrement l'angle de rebond pour éviter les rebonds trop verticaux ou horizontaux
+            Vector2 direction = rb.velocity.normalized;
+            if (Mathf.Abs(direction.x) < 0.1f)
+            {
+                direction.x = direction.x < 0 ? -0.1f : 0.1f;
+            }
+            if (Mathf.Abs(direction.y) < 0.1f)
+            {
+                direction.y = direction.y < 0 ? -0.1f : 0.1f;
+            }
+            rb.velocity = direction * speed;
         }
-        rb.velocity = direction * speed;
     }
 
     void OnTriggerEnter2D(Collider2D collision)

@@ -318,6 +318,8 @@ MonoBehaviour:
   speed: 10
   Camera: {fileID: 519420031}
   moveAction: {fileID: -8034387024440503493, guid: 0a1085f13b2a98a4ba9901ba3f0c416d, type: 3}
+  leftWall: {fileID: 1990849828}
+  rightWall: {fileID: 432869824}
 --- !u!1 &432869823
 GameObject:
   m_ObjectHideFlags: 0
@@ -2773,7 +2775,7 @@ GameObject:
   - component: {fileID: 7489525308572620685}
   m_Layer: 6
   m_Name: Ball
-  m_TagString: Untagged
+  m_TagString: Ball
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3033,7 +3035,7 @@ CircleCollider2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2

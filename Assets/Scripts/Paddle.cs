@@ -10,6 +10,8 @@ public class Paddle : MonoBehaviour
     private Vector3 originalScale;
     public Camera Camera;
     public InputActionReference moveAction;
+    public Collider2D leftWall;
+    public Collider2D rightWall;
 
     void Start()
     {
@@ -27,13 +29,16 @@ public class Paddle : MonoBehaviour
 
     void Update()
     {
-        screenWidthUnits = Camera.orthographicSize * Camera.aspect;
         Vector2 inputVector = moveAction.action.ReadValue<Vector2>();
         float horizontal = inputVector.x;
         Vector3 position = transform.position;
         position.x += horizontal * speed * Time.deltaTime;
-        // Limiter la raquette aux bords de l'écran
-        position.x = Mathf.Clamp(position.x, -screenWidthUnits + 1, screenWidthUnits - 1);
+
+        // Limiter la raquette aux murs
+        float leftLimit = leftWall.bounds.max.x + transform.localScale.x / 2;
+        float rightLimit = rightWall.bounds.min.x - transform.localScale.x / 2;
+        position.x = Mathf.Clamp(position.x, leftLimit, rightLimit);
+
         transform.position = position;
     }
 

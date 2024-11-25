@@ -8,6 +8,8 @@ TagManager:
   - Paddle
   - Wall
   - Brick
+  - Ball
+  - BonusItem
   layers:
   - Default
   - TransparentFX
