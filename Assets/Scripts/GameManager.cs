@@ -123,13 +123,16 @@ public class GameManager : MonoBehaviour
     {
         for (int i = 0; i < count; i++)
         {
-            Ball extraBall = Instantiate(ball, ball.transform.position, Quaternion.identity);
+            // Ajouter un léger décalage à la position de départ pour éviter les collisions
+            Vector3 offset = new Vector3(Random.Range(-0.5f, 0.5f), Random.Range(-0.5f, 0.5f), 0);
+            Ball extraBall = Instantiate(ball, ball.transform.position + offset, Quaternion.identity);
             extraBall.gameManager = this;
             extraBall.inPlay = true;
             Rigidbody2D rb = extraBall.GetComponent<Rigidbody2D>();
             rb.AddForce(Random.insideUnitCircle.normalized * ball.speed, ForceMode2D.Impulse);
         }
     }
+
     public void RegisterBall()
     {
         activeBalls++;

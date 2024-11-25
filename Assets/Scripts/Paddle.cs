@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using UnityEngine.InputSystem;
 
 public class Paddle : MonoBehaviour
 {
@@ -7,22 +8,35 @@ public class Paddle : MonoBehaviour
     private float screenWidthUnits;
     private bool expandBonusActive = false;
     private Vector3 originalScale;
+    public Camera Camera;
+    public InputActionReference moveAction;
 
     void Start()
     {
-        screenWidthUnits = Camera.main.orthographicSize * Camera.main.aspect;
+        screenWidthUnits = Camera.orthographicSize * Camera.aspect;
         originalScale = transform.localScale;
+    }
+    void OnEnable()
+    {
+        moveAction.action.Enable();
+    }
+    private void OnDisable()
+    {
+        moveAction.action.Disable();
     }
 
     void Update()
     {
-        float horizontal = Input.GetAxis("Horizontal");
+        screenWidthUnits = Camera.orthographicSize * Camera.aspect;
+        Vector2 inputVector = moveAction.action.ReadValue<Vector2>();
+        float horizontal = inputVector.x;
         Vector3 position = transform.position;
         position.x += horizontal * speed * Time.deltaTime;
         // Limiter la raquette aux bords de l'écran
         position.x = Mathf.Clamp(position.x, -screenWidthUnits + 1, screenWidthUnits - 1);
         transform.position = position;
     }
+
 
     public void Expand(float scaleMultiplier, float duration)
     {

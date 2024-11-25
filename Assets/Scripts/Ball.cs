@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using UnityEngine.InputSystem;
 
 public class Ball : MonoBehaviour
 {
@@ -11,9 +12,8 @@ public class Ball : MonoBehaviour
 
     private bool speedBonusActive = false;
     private bool slowBonusActive = false;
-    private bool paddleExpandBonusActive = false;
     private float originalSpeed;
-    private Vector3 originalPaddleScale;
+    public InputActionReference ShootAction;
 
     void Start()
     {
@@ -26,29 +26,49 @@ public class Ball : MonoBehaviour
         }
     }
 
-    void Update()
+    void OnEnable()
+    {
+        ShootAction.action.Enable();
+        ShootAction.action.performed += ctx => LaunchBall();
+    }
+
+    void OnDisable()
+    {
+        ShootAction.action.Disable();
+        ShootAction.action.performed -= ctx => LaunchBall();
+    }
+
+    private void Update()
     {
         if (!inPlay)
         {
             // Verrouiller la balle sur la raquette avant le lancement
             transform.position = paddle.position + new Vector3(0, 0.5f, 0);
+        }
+    }
 
-            if (Input.GetButtonDown("Jump"))
-            {
-                inPlay = true;
-                rb.AddForce(Vector2.up * speed, ForceMode2D.Impulse);
-            }
+    private void LaunchBall()
+    {
+        if (!inPlay)
+        {
+            inPlay = true;
+            rb.AddForce(Vector2.up * speed, ForceMode2D.Impulse);
         }
     }
 
     void OnCollisionEnter2D(Collision2D collision)
     {
         // Ajuster légèrement l'angle de rebond pour éviter les rebonds trop verticaux ou horizontaux
-        if (collision.gameObject.CompareTag("Paddle"))
+        Vector2 direction = rb.velocity.normalized;
+        if (Mathf.Abs(direction.x) < 0.1f)
         {
-            Vector2 direction = (transform.position - collision.transform.position).normalized;
-            rb.velocity = direction * speed;
+            direction.x = direction.x < 0 ? -0.1f : 0.1f;
         }
+        if (Mathf.Abs(direction.y) < 0.1f)
+        {
+            direction.y = direction.y < 0 ? -0.1f : 0.1f;
+        }
+        rb.velocity = direction * speed;
     }
 
     void OnTriggerEnter2D(Collider2D collision)
@@ -98,8 +118,6 @@ public class Ball : MonoBehaviour
         rb.velocity = rb.velocity.normalized * speed;
         slowBonusActive = false;
     }
-
-
 
     public void ResetBall()
     {
